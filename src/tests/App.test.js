@@ -4,6 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
+import expectToBeInTheDocument from './alias';
 
 describe('Test the <App.js /> component', () => {
   test('Test whether the top of the application contains a fixed set of navigation links',
@@ -18,13 +19,11 @@ describe('Test the <App.js /> component', () => {
       const aboutEl = screen.getByRole('link', { name: /about/i });
       const favoritePokemons = screen.getByRole('link', { name: /favorite pokémons/i });
 
-      expect(homeEL).toBeInTheDocument();
-      expect(aboutEl).toBeInTheDocument();
-      expect(favoritePokemons).toBeInTheDocument();
+      expectToBeInTheDocument(homeEL, aboutEl, favoritePokemons);
     });
 
   test(`Test whether the application is redirected to the home page in the / URL 
-  by clicking the Home link in the navigation bar.`,
+  by clicking the Home link in the Navigation Bar`,
   () => {
     render(
       <MemoryRouter>
@@ -81,7 +80,7 @@ describe('Test the <App.js /> component', () => {
   });
 
   test(`Test whether the application is redirected to the Not Found page
-   by entering an unknown URL.`,
+   by entering an unknown URL`,
   () => {
     render(
       <MemoryRouter>
