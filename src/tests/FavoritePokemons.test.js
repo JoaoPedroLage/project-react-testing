@@ -1,10 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import { FavoritePokemons } from '../components';
+import App from '../App';
 
 describe('Test the <FavoritePokemons.js /> component', () => {
-  test('Test if the page contains information FavoritePokemons Pokédex',
+  test('Test if the message was found if the person has no favorite Pokémon',
     () => {
       render(
         <MemoryRouter>
@@ -12,49 +14,31 @@ describe('Test the <FavoritePokemons.js /> component', () => {
         </MemoryRouter>,
       );
 
-      const paragEl = screen.getByText(
-        // eslint-disable-next-line max-len
-        /this application simulates a pokédex, a digital encyclopedia containing all pokémons/i,
-      );
-      expect(paragEl).toBeDefined();
+      const alertEl = screen.getByText(/No favorite pokemon found/i);
+      expect(alertEl).toBeDefined();
     });
 
-  test('Test if the page contains an heading H2 with the text FavoritePokemons Pokédex',
+  test('Test whether all favorite Pokémon cards are displayed',
     () => {
       render(
         <MemoryRouter>
-          <FavoritePokemons />
+          <App />
         </MemoryRouter>,
       );
+      const pikachuMoreDLink = screen.getByRole('link', { name: /more details/i });
+      userEvent.click(pikachuMoreDLink);
 
-      const headingEl = screen.getByRole('heading', {
-        name: /FavoritePokemons pokédex/i,
-      });
+      const checkBoxFavorite = screen.getByRole('checkbox',
+        { name: /pokémon favoritado?/i });
 
-      expect(headingEl).toBeDefined();
-    });
+      userEvent.click(checkBoxFavorite);
 
-  test('Test if the page contains two paragraphs with text FavoritePokemons Pokédex',
-    () => {
-      render(
-        <MemoryRouter>
-          <FavoritePokemons />
-        </MemoryRouter>,
-      );
+      const favoritePokemonsLink = screen.getByRole('link',
+        { name: /favorite Pokémons/i });
+      userEvent.click(favoritePokemonsLink);
 
-      expect(getAllByAllText(/pokémons/i)[2]).toBeInTheDocument();
-    });
+      const pikachuEL = screen.getByText(/pikachu/i);
 
-  test('Test if the page contains the following picture of a Pokédex',
-    () => {
-      render(
-        <MemoryRouter>
-          <FavoritePokemons />
-        </MemoryRouter>,
-      );
-
-      const pokemonImgEl = screen.getByRole('img', { name: /pokédex/i });
-
-      expect(pokemonImgEl).toBeInTheDocument();
+      expect(pikachuEL).toBeInTheDocument();
     });
 });

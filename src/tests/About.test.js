@@ -13,8 +13,7 @@ describe('Test the <About.js /> component', () => {
       );
 
       const paragEl = screen.getByText(
-        // eslint-disable-next-line max-len
-        /this application simulates a pokédex, a digital encyclopedia containing all pokémons/i,
+        /this application simulates a pokédex, a digital encyclopedia/i,
       );
       expect(paragEl).toBeDefined();
     });
