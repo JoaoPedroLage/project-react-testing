@@ -6,7 +6,7 @@ import App from '../App';
 import pokemons from '../data';
 import expectToBeInTheDocument from './alias';
 
-describe('Test the <App.js /> component', () => {
+describe('Test the <Pokedex.js /> component', () => {
   test('Test if page contains a header with the text Encountered Pokémons',
     () => {
       render(

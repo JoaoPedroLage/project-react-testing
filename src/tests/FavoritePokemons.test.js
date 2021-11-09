@@ -34,7 +34,7 @@ describe('Test the <FavoritePokemons.js /> component', () => {
       userEvent.click(checkBoxFavorite);
 
       const favoritePokemonsLink = screen.getByRole('link',
-        { name: /favorite Pokémons/i });
+        { name: /favorite pokémons/i });
       userEvent.click(favoritePokemonsLink);
 
       const pikachuEL = screen.getByText(/pikachu/i);
